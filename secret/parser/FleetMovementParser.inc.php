@@ -192,11 +192,11 @@ class FleetMovementParser extends XMLParserGlobal{
 
 		if ($this->delete_fleetmovement_at_database($fleets_data) === false) return false;
 
-		$query = "INSERT INTO $this->fleetmovetable (".
-		"fleet_id,sub_fleet_id,mission,arrival_time,returning,origin_galaxy,origin_system,origin_planet,origin_planetname,origin_moon,".
-		"destination_galaxy,destination_system,destination_planet,destination_planetname,destination_moon,scantime,user_id,".
-		"metal,crystal,deuterium,".
-		"kt,gt,lj,sj,krz,ss,kolo,rec,spio,bomb,zerri,ds,skrz,irak".
+		$query = "INSERT INTO `$this->fleetmovetable` (".
+		"`fleet_id`,`sub_fleet_id`,`mission`,`arrival_time`,`returning`,`origin_galaxy`,`origin_system`,`origin_planet`,`origin_planetname`,`origin_moon`,".
+		"`destination_galaxy`,`destination_system`,`destination_planet`,`destination_planetname`,`destination_moon`,`scantime`,`user_id`,".
+		"`metal`,`crystal`,`deuterium`,".
+		"`kt`,`gt`,`lj`,`sj`,`krz`,`ss`,`kolo`,`rec`,`spio`,`bomb`,`zerri`,`ds`,`skrz`,`irak`".
 		") VALUES ";
 
 		foreach ($fleets_data as $fleet) {
@@ -269,14 +269,14 @@ class FleetMovementParser extends XMLParserGlobal{
 		// remove comma behind last VALUES part
 		$query = substr($query,0,strlen($query)-1);
 		$query .= " ON DUPLICATE KEY UPDATE ".
-		"mission=VALUES(mission),arrival_time=VALUES(arrival_time),returning=VALUES(returning),origin_galaxy=VALUES(origin_galaxy),".
-		"origin_system=VALUES(origin_system),origin_planet=VALUES(origin_planet),origin_planetname=VALUES(origin_planetname),origin_moon=VALUES(origin_moon),".
-		"destination_galaxy=VALUES(destination_galaxy),destination_system=VALUES(destination_system),destination_planet=VALUES(destination_planet),".
-		"destination_planetname=VALUES(destination_planetname),destination_moon=VALUES(destination_moon),scantime=VALUES(scantime),user_id=VALUES(user_id),".
-		"metal=VALUES(metal),crystal=VALUES(crystal),deuterium=VALUES(deuterium),".
-		"kt=VALUES(kt),gt=VALUES(gt),lj=VALUES(lj),sj=VALUES(sj),krz=VALUES(krz),".
-		"ss=VALUES(ss),kolo=VALUES(kolo),rec=VALUES(rec),spio=VALUES(spio),bomb=VALUES(bomb),".
-		"zerri=VALUES(zerri),ds=VALUES(ds),skrz=VALUES(skrz),irak=VALUES(irak)";
+		"`mission`=VALUES(`mission`),`arrival_time`=VALUES(`arrival_time`),`returning`=VALUES(`returning`),`origin_galaxy`=VALUES(`origin_galaxy`),".
+		"`origin_system`=VALUES(`origin_system`),`origin_planet`=VALUES(`origin_planet`),`origin_planetname`=VALUES(`origin_planetname`),`origin_moon`=VALUES(`origin_moon`),".
+		"`destination_galaxy`=VALUES(`destination_galaxy`),`destination_system`=VALUES(`destination_system`),`destination_planet`=VALUES(`destination_planet`),".
+		"`destination_planetname`=VALUES(`destination_planetname`),`destination_moon`=VALUES(`destination_moon`),`scantime`=VALUES(`scantime`),`user_id`=VALUES(`user_id`),".
+		"`metal`=VALUES(`metal`),`crystal`=VALUES(`crystal`),`deuterium`=VALUES(`deuterium`),".
+		"`kt`=VALUES(`kt`),`gt`=VALUES(`gt`),`lj`=VALUES(`lj`),`sj`=VALUES(`sj`),`krz`=VALUES(`krz`),".
+		"`ss`=VALUES(`ss`),`kolo`=VALUES(`kolo`),`rec`=VALUES(`rec`),`spio`=VALUES(`spio`),`bomb`=VALUES(`bomb`),".
+		"`zerri`=VALUES(`zerri`),`ds`=VALUES(`ds`),`skrz`=VALUES(`skrz`),`irak`=VALUES(`irak`)";
 
 		$stmt = $this->query($query);
 		if (!$stmt) {
