@@ -372,7 +372,7 @@ class MessageParser extends XMLParserGlobal{
 		// determine player_id from database for FROM and TO
 		$player_ids = $this->get_playerid_for_players($messages_data);
 
-		$query = "INSERT INTO $this->messagetable (msg_id, messagetime, subject, player_id_from, player_id_to, message_content, userid) VALUES ";
+		$query = "INSERT INTO `$this->messagetable` (`msg_id`, `messagetime`, `subject`, `player_id_from`, `player_id_to`, `message_content`, `userid`) VALUES ";
 
 		$insert_needed = false;
 		foreach ($messages_data as $message) {

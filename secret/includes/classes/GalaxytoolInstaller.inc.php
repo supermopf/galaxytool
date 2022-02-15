@@ -489,7 +489,7 @@ $speed_rate  = '.$speed_rate.';       // increase this value if you are in a spe
 			  planet int(2) unsigned NOT NULL default '0',
 			  planetname varchar(40) NOT NULL default '',
 			  moon enum('true','false') NOT NULL default 'false',
-			  msg_id int(10) unsigned default NULL,
+			  msg_id bigint(10) unsigned default NULL,
 			  metal int(10) unsigned NOT NULL default '0',
 			  crystal int(10) unsigned NOT NULL default '0',
 			  deuterium int(10) unsigned NOT NULL default '0',
