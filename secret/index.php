@@ -80,9 +80,9 @@ if ($_SESSION['s_auth']->get_setting(iAuthorization::setting_getting_started) !=
 <div id="gettingStartedInfos" dojoType="dijit.TitlePane" title="<?php echo INDEX_GETTING_STARTED; ?>" open="<?php echo $expand_getting_started; ?>">
 <?php
 switch($_SESSION['lang']) {
-	case "german":  $url = "https://addons.mozilla.org/de/firefox/addon/galaxytoolbar/versions"; break;
-	case "spanish": $url = "https://addons.mozilla.org/es-ES/firefox/addon/galaxytoolbar/versions"; break;
-	default:        $url = "https://addons.mozilla.org/en-US/firefox/addon/galaxytoolbar/versions"; break;
+	case "german":  $url = "https://chrome.google.com/webstore/detail/galaxytoolbar-revived-for/fpgfgephimamebidafbckomhpjclmpfp"; break;
+	case "spanish": $url = "https://chrome.google.com/webstore/detail/galaxytoolbar-revived-for/fpgfgephimamebidafbckomhpjclmpfp"; break;
+	default:        $url = "https://chrome.google.com/webstore/detail/galaxytoolbar-revived-for/fpgfgephimamebidafbckomhpjclmpfp"; break;
 }
 echo INDEX_GETTING_STARTED1."<br>";
 echo str_replace("&1","<strong>$global_universe</strong>",INDEX_GETTING_STARTED2)."<br>";
@@ -134,9 +134,9 @@ $http_s = (isset($_SERVER['HTTPS'])) ? "https://" : "http://";
 <td>
 <?php
 switch($_SESSION['lang']) {
-	case "german":  $url = "https://addons.mozilla.org/de/firefox/addon/galaxytoolbar/"; break;
-	case "spanish": $url = "https://addons.mozilla.org/es-ES/firefox/addon/galaxytoolbar/"; break;
-	default:        $url = "https://addons.mozilla.org/en-US/firefox/addon/galaxytoolbar/"; break;
+	case "german":  $url = "https://chrome.google.com/webstore/detail/galaxytoolbar-revived-for/fpgfgephimamebidafbckomhpjclmpfp"; break;
+	case "spanish": $url = "https://chrome.google.com/webstore/detail/galaxytoolbar-revived-for/fpgfgephimamebidafbckomhpjclmpfp"; break;
+	default:        $url = "https://chrome.google.com/webstore/detail/galaxytoolbar-revived-for/fpgfgephimamebidafbckomhpjclmpfp"; break;
 }
 ?>
 <a class="external_link" href="<?php echo $url; ?>" target="_blank"><?php echo PLUGIN_VERSION; ?></a></td>

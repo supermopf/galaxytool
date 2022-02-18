@@ -1,5 +1,5 @@
 <?php
-require_once GALAXYTOOL_ROOT."/languages/english_probes.inc.php";
+require_once GALAXYTOOL_ROOT."/secret/includes/config/DatabaseConfig.inc.php";
 /*
 * Class to convert the XML content into php variables and to insert the content into
 * corresponding datebase tables.
@@ -14,173 +14,16 @@ class ReportParser extends XMLParserGlobal{
 	private $unknown_entries_found = false;
 
 
-	private $db_index = array(
-	R_METAL => 0,
-	R_CRYSTAL => 1,
-	R_DEUTERIUM => 2,
-	R_ENERGY => 3,
-
-	F_SMALLCARGOSHIP => 4,
-	F_LARGECARGOSHIP => 5,
-	F_LIGHFIGHTER => 6,
-	F_HEAVYFIGHTER => 7,
-	F_CRUISER => 8,
-	F_BATTLESHIP => 9,
-	F_COLONYSHIP => 10,
-	F_RECYCLER => 11,
-	F_ESPIONAGEPROBE =>12,
-	F_BOMBER => 13,
-	F_DESTROYER => 14,
-	F_DEATHSTAR => 15,
-	F_BATTLECRUISER=> 16,
-	F_SOLARSATELLITE => 17,
-
-	D_MISSILELAUNCHER => 18,
-	D_SMALLLASER => 19,
-	D_HEAVYLASER => 20,
-	D_IONCANNON => 21,
-	D_GAUSSCANNON => 22,
-	D_PLASMACANNON => 23,
-	D_SMALLSHIELDDOME => 24,
-	D_LARGESHILDDOME => 25,
-	D_ANTIBALLISTICMISSILE => 26,
-	D_INTERPLANETARYMISSILE => 27,
-
-	B_METALMINE => 28,
-	B_CRYSTALMINE => 29,
-	B_DEUTERIUMSYNTHESIZER => 30,
-	B_SOLARPLANT => 31,
-	B_FUSIONPLANT => 32,
-	B_ROBOTFACTORY => 33,
-	B_NANITEFACTORY => 34,
-	B_SHIPYARD => 35,
-	B_METALSTORAGE => 36,
-	B_CRYSTALSTORAGE => 37,
-	B_DEUTERIUMTANK => 38,
-	B_RESAERCHLAB => 39,
-	B_TERRAFORMER => 40,
-	B_ALLIANCEDEPOT => 41,
-	B_ROCKETSILO => 42,
-	B_LUNARBASE => 43,
-	B_SENSORPHALANX => 44,
-	B_JUMPGATE => 45,
-
-	RS_ESPIONAGE => 46,
-	RS_COMPUTER => 47,
-	RS_WEAPON => 48,
-	RS_SHIELDING => 49,
-	RS_ARMOUR => 50,
-	RS_ENERGY => 51,
-	RS_HYPERSPACE => 52,
-	RS_COMBUSTIONENGINE => 53,
-	RS_IMPULSEENGINE => 54,
-	RS_HYPERSPACEENGINE => 55,
-	RS_LASER => 56,
-	RS_ION => 57,
-	RS_PLASMA => 58,
-	RS_IRNETWORK => 59,
-	RS_EXPEDITION => 60,
-	RS_GRAVITON => 61
-	);
+	//private $db_index = DB_INDEX_FIELDS;
 
 	// resources you will lose at fleet
-	private $fleet_array = array(
-	F_SMALLCARGOSHIP => 4000,
-	F_LARGECARGOSHIP => 12000,
-	F_LIGHFIGHTER => 4000,
-	F_HEAVYFIGHTER => 10000,
-	F_CRUISER => 27000,
-	F_BATTLESHIP => 60000,
-	F_COLONYSHIP => 30000,
-	F_RECYCLER => 18000,
-	F_ESPIONAGEPROBE => 1000,
-	F_BOMBER => 22500,
-	F_DESTROYER => 110000,
-	F_DEATHSTAR => 9000000,
-	F_BATTLECRUISER => 70000,
-	F_SOLARSATELLITE => 2000,
-	);
+    //private $fleet_array = FLEET_ARRAY;
 
 	// resources you will lose at def
-	private $defence_array = array(
-	D_MISSILELAUNCHER => 600,
-	D_SMALLLASER => 600,
-	D_HEAVYLASER => 2400,
-	D_IONCANNON => 2400,
-	D_GAUSSCANNON => 10500,
-	D_PLASMACANNON => 30000,
-	D_SMALLSHIELDDOME => 6000,
-	D_LARGESHILDDOME => 30000,
-	);
+	//private $defence_array = DEFENCE_ARRAY;
 
 	// attention - this is a copy of the $db_array in general.inc.php! Always adjust both files if needed
-	private $db_array = array(
-	R_METAL => "metal",
-	R_CRYSTAL => "crystal",
-	R_DEUTERIUM => "deuterium",
-	R_ENERGY => "energy",
-	F_SMALLCARGOSHIP => "kt",
-	F_LARGECARGOSHIP => "gt",
-	F_LIGHFIGHTER => "lj",
-	F_HEAVYFIGHTER => "sj",
-	F_CRUISER => "krz",
-	F_BATTLESHIP => "ss",
-	F_COLONYSHIP => "kolo",
-	F_RECYCLER => "rec",
-	F_ESPIONAGEPROBE => "spio",
-	F_BOMBER => "bomb",
-	F_DESTROYER => "zerri",
-	F_DEATHSTAR => "ds",
-	F_BATTLECRUISER=>"skrz",
-	F_SOLARSATELLITE => "sat",
-
-	D_MISSILELAUNCHER => "rak",
-	D_SMALLLASER => "ll",
-	D_HEAVYLASER => "sl",
-	D_IONCANNON => "ion",
-	D_GAUSSCANNON => "gauss",
-	D_PLASMACANNON => "plasma",
-	D_SMALLSHIELDDOME => "ksk",
-	D_LARGESHILDDOME => "gsk",
-	D_ANTIBALLISTICMISSILE => "arak",
-	D_INTERPLANETARYMISSILE => "irak",
-
-	B_METALMINE => "memi",
-	B_CRYSTALMINE => "krimi",
-	B_DEUTERIUMSYNTHESIZER => "deutsyn",
-	B_SOLARPLANT => "solar",
-	B_FUSIONPLANT => "fusion",
-	B_ROBOTFACTORY => "robo",
-	B_NANITEFACTORY => "nani",
-	B_SHIPYARD => "rawe",
-	B_METALSTORAGE => "mesp",
-	B_CRYSTALSTORAGE => "krissp",
-	B_DEUTERIUMTANK => "deutsp",
-	B_RESAERCHLAB => "folab",
-	B_TERRAFORMER => "terra",
-	B_ALLIANCEDEPOT => "allydep",
-	B_ROCKETSILO => "raksilo",
-	B_LUNARBASE => "mbase",
-	B_SENSORPHALANX => "sensor",
-	B_JUMPGATE => "sprungtor",
-
-	RS_ESPIONAGE => "spiolvl",
-	RS_COMPUTER => "computech",
-	RS_WEAPON => "waffentech",
-	RS_SHIELDING => "schildtech",
-	RS_ARMOUR => "rpz",
-	RS_ENERGY => "energytech",
-	RS_HYPERSPACE => "hypertech",
-	RS_COMBUSTIONENGINE => "vbt",
-	RS_IMPULSEENGINE => "impulse",
-	RS_HYPERSPACEENGINE => "hra",
-	RS_LASER => "lasertech",
-	RS_ION => "iontech",
-	RS_PLASMA => "plasmatech",
-	RS_IRNETWORK => "forschungsnetz",
-	RS_EXPEDITION => "expedition",
-	RS_GRAVITON => "gravi"
-	);
+	//private $db_array = DB_ARRAY;
 
 
 
@@ -188,7 +31,7 @@ class ReportParser extends XMLParserGlobal{
 		$this->xml_schema = "xml_schema/reports.xsd";
 		//  call super constructor
 		$result = parent::__construct("DUMMY_TABLE_NAME",$playertable,$utablename,$universe);
-		if ($result === false) {
+		if ($result == false) {
 			return false;
 		}
 
@@ -234,7 +77,7 @@ class ReportParser extends XMLParserGlobal{
 			// extract information from XML file
 			$report_data = $this->get_report_data($report);
 			// store results
-			array_push($reports_data, $report_data);
+			$reports_data[] = $report_data;
 		}
 		unset($reports);
 		unset($xdoc);
@@ -247,7 +90,7 @@ class ReportParser extends XMLParserGlobal{
 	}
 
 	private function get_report_data($report_DOMNode) {
-		$return_value = array();
+		$return_value = [];
 		$return_value["playername"] = trim($report_DOMNode->getAttribute("playername"));
 		$return_value["planetname"] = trim($report_DOMNode->getAttribute("planetname"));
 		$return_value["moon"]       = $report_DOMNode->getAttribute("moon");
@@ -275,10 +118,10 @@ class ReportParser extends XMLParserGlobal{
 
 		$report_entries_DOMNode = $report_DOMNode->getElementsByTagName("entry");
 		foreach ($report_entries_DOMNode as $entry_DOMNode) {
-			array_push($return_value["entries"], array(
-			"name" => $entry_DOMNode->getAttribute("name"),
-			"amount" => $entry_DOMNode->getAttribute("amount")
-			));
+			$return_value["entries"][] = array(
+                "name" => $entry_DOMNode->getAttribute("name"),
+                "amount" => $entry_DOMNode->getAttribute("amount")
+            );
 		}
 
 		return $return_value;
@@ -292,7 +135,7 @@ class ReportParser extends XMLParserGlobal{
 		}
 
 		// check which IDs exist on DB level
-		$query = "SELECT msg_id FROM $this->reporttable WHERE msg_id IN ('".implode("','",$report_ids)."')";
+		$query = "SELECT `msg_id` FROM `".$this->reporttable."` WHERE `msg_id` IN ('".implode("','",$report_ids)."')";
 		$stmt = $this->query($query);
 		if (!$stmt) {
 			$this->error_object = new ErrorObject(ErrorObject::severity_error , "DB error occurred while checking for existing reports");
@@ -300,7 +143,7 @@ class ReportParser extends XMLParserGlobal{
 			return false;
 		}
 
-		$existing_reports = array();
+		$existing_reports = [];
 		while ($line = $stmt->fetch(PDO::FETCH_OBJ)) {
 			$existing_reports[$line->msg_id] = "";
 		}
@@ -323,43 +166,28 @@ class ReportParser extends XMLParserGlobal{
 
 		if (count($reports) == 0) return true;
 
-		$query = "INSERT INTO $this->reporttable (".
-		"galaxy,system,planet,planetname,moon,msg_id,".
-		"metal,crystal,deuterium,energy,".
-		"kt,gt,lj,sj,krz,ss,kolo,rec,spio,bomb,zerri,ds,skrz,sat,".
-		"rak,ll,sl,ion,gauss,plasma,ksk,gsk,arak,irak,".
-		"memi,krimi,deutsyn,solar,fusion,robo,nani,rawe,mesp,krissp,deutsp,folab,terra,allydep,raksilo,mbase,sensor,sprungtor,".
-		"spiolvl,computech,waffentech,schildtech,rpz,energytech,hypertech,vbt,impulse,hra,lasertech,iontech,plasmatech,forschungsnetz,expedition,gravi,".
-		"fleet_resis,defence_resis,".
-		"scantime,user_id,scanned,".
-		"min_phalanx,max_phalanx,min_rak,max_rak".
-		") VALUES ";
-
-
 		foreach ($reports as $report) {
 			$unknown_entries_occured = false;
 
 			// initialize entries array
-			$entries_array = array();
-			for ($i=0;$i<count($this->db_index);$i++) {
-				$entries_array[$i] = 0;
-			}
+			$entries_array = [];
 			$fleet_df   = 0;
 			$defence_df = 0;
 
 			// use all english texts to determine the position in the entries array where to store the amount
 			$unknown_entries = new ErrorObject(ErrorObject::severity_warning , REPORTS_UNKNOWN_ENTRIES." ".$report["galaxy"].":".$report["system"].":".$report["planet"]);
-			foreach ($report["entries"] as $entry) {
-				if (isset($this->db_index[$entry["name"]])) {
-					$entries_array[$this->db_index[$entry["name"]]] = intval($entry["amount"]);
+
+            foreach ($report["entries"] as $entry) {
+				if (isset(DB_REPORT_ARRAY[$entry["name"]])) {
+					$entries_array[DB_REPORT_ARRAY[$entry["name"]]["DBFIELD"]] = intval($entry["amount"]);
 
 					// calculate fleet debris
-					if (isset($this->fleet_array[$entry["name"]])) {
-						$fleet_df += ($this->fleet_array[$entry["name"]] * $entry["amount"]);
+					if (isset(DB_REPORT_ARRAY[$entry["name"]]["TYPE"]) && DB_REPORT_ARRAY[$entry["name"]]["TYPE"] == "fleet") {
+						$fleet_df += (DB_REPORT_ARRAY[$entry["name"]]["MATERIAL"] * $entry["amount"]);
 					}
 					// calculate defense debris
-					if (isset($this->defence_array[$entry["name"]])) {
-						$defence_df += ($this->defence_array[$entry["name"]] * $entry["amount"]);
+					if (isset(DB_REPORT_ARRAY[$entry["name"]]["TYPE"]) && DB_REPORT_ARRAY[$entry["name"]]["TYPE"] == "defense") {
+						$defence_df += (DB_REPORT_ARRAY[$entry["name"]]["MATERIAL"] * $entry["amount"]);
 					}
 				} else {
 					// unknown entries
@@ -370,86 +198,116 @@ class ReportParser extends XMLParserGlobal{
 
 			// second moon detection (Lunarbase, sensorphalanx or jumpgate exist)
 			$moon = $report["moon"];
-			if ($entries_array[43] > 0 || $entries_array[44] > 0 || $entries_array[45] > 0) {
+			if (
+                    $entries_array[DB_REPORT_ARRAY[B_LUNARBASE]["DBFIELD"]] > 0
+                ||  $entries_array[DB_REPORT_ARRAY[B_SENSORPHALANX]["DBFIELD"]] > 0
+                ||  $entries_array[DB_REPORT_ARRAY[B_JUMPGATE]["DBFIELD"]] > 0
+            ) {
 				$moon = "true";
 			}
 
+            // calculate max range for phalanx
+            if ($entries_array[DB_REPORT_ARRAY[B_SENSORPHALANX]["DBFIELD"]] > 0) {
+                $min_phalanx = ($report["system"] - (($entries_array[DB_REPORT_ARRAY[B_SENSORPHALANX]["DBFIELD"]]*$entries_array[DB_REPORT_ARRAY[B_SENSORPHALANX]["DBFIELD"]])-1));
+                if ($min_phalanx < 0){
+                    $min_phalanx = 0;
+                }
+                $max_phalanx = ($report["system"] + (($entries_array[DB_REPORT_ARRAY[B_SENSORPHALANX]["DBFIELD"]]*$entries_array[DB_REPORT_ARRAY[B_SENSORPHALANX]["DBFIELD"]])-1));
+            } else {
+                $min_phalanx = 0;
+                $max_phalanx = 0;
+            }
+
+            // calculate max range for rockets
+            if ($entries_array[DB_REPORT_ARRAY[B_ROCKETSILO]["DBFIELD"]] > 3 && $entries_array[DB_REPORT_ARRAY[RS_IMPULSEENGINE]["DBFIELD"]] > 0) { // rocket silo and impulse tech
+                $min_rak = ($report["system"] - (($entries_array[DB_REPORT_ARRAY[RS_IMPULSEENGINE]["DBFIELD"]]*5)-1));
+                if ($min_rak < 0){
+                    $min_rak = 0; // to avoid problems with mysql unsigned data type
+                }
+                $max_rak = ($report["system"] + (($entries_array[DB_REPORT_ARRAY[RS_IMPULSEENGINE]["DBFIELD"]]*5)-1));
+            } else {
+                $min_rak = 0;
+                $max_rak = 0;
+            }
 
 			// start building the query information
-			$entry_query = "(";
-			$entry_query .= intval($report["galaxy"]).",";
-			$entry_query .= intval($report["system"]).",";
-			$entry_query .= intval($report["planet"]).",";
-			$entry_query .= DB::getDB()->quote($report["planetname"]).",";
-			$entry_query .= DB::getDB()->quote($moon).",";
-			$entry_query .= intval($report["msg_id"]).",";
-
-			$entry_query .= implode(",",$entries_array).",";
-
-			// set fleet and defense debris
-			$entry_query .= intval($fleet_df).",";
-			$entry_query .= intval($defence_df).",";
-
-			// scantime, user_id, scanned
-			$entry_query .= DB::getDB()->quote(str_replace(".","-",$report["datetime"])).",";
-			$entry_query .= $userid.",";
-			$entry_query .= "'".$report["scandepth"]."',";
-
-			// calculate max range for phalanx
-			if ($entries_array[44] > 0) {
-				$min_phalanx = ($report["system"] - (($entries_array[44]*$entries_array[44])-1));
-				if ($min_phalanx < 0) $min_phalanx = 0;
-				$entry_query .= "".$min_phalanx.",".($report["system"] + (($entries_array[44]*$entries_array[44])-1)).", ";
-			} else {
-				$entry_query .= "0,0,";
-			}
-
-			// calculate max range for rockets
-			if ($entries_array[42] > 3 && $entries_array[54] > 0) { // rocket silo and impulse tech
-				$min_rak = ($report["system"] - (($entries_array[54]*5)-1));
-				if ($min_rak < 0) $min_rak = 0; // to avoid problems with mysql unsigned data type
-				$entry_query .= $min_rak.",".($report["system"] + (($entries_array[54]*5)-1))." "; // attention: no comma at the end as this is the last entry in the query
-			} else {
-				$entry_query .= "0,0"; // attention: no comma at the end as this is the last entry in the query
-			}
+            $entries_array["galaxy"] = intval($report["galaxy"]);
+            $entries_array["system"] = intval($report["system"]);
+            $entries_array["planet"] = intval($report["planet"]);
+            $entries_array["planetname"] = $report["planetname"];
+            $entries_array["moon"] = $moon;
+            $entries_array["msg_id"] = intval($report["msg_id"]);
+            $entries_array["fleet_resis"] = intval($fleet_df);
+            $entries_array["defence_resis"] = intval($defence_df);
+            $entries_array["scantime"] = str_replace(".","-",$report["datetime"]);
+            $entries_array["user_id"] = intval($userid);
+            $entries_array["scanned"] = intval($report["scandepth"]);
+            $entries_array["min_phalanx"] = intval($min_phalanx);
+            $entries_array["max_phalanx"] = intval($max_phalanx);
+            $entries_array["min_rak"] = intval($min_rak);
+            $entries_array["max_rak"] = intval($max_rak);
 
 			// store all unknown entries of this report
 			if ($unknown_entries_occured === true) {
 				$this->unknown_entries_error_object->add_child_message($unknown_entries);
 				$this->unknown_entries_found = true;
 			}
-
-			$entry_query .= "),";
-			// add complete entry to global query
-			$query .= $entry_query;
 		}
 
-		// remove comma behind last VALUES part
-		$query = substr($query,0,strlen($query)-1);
-		$query .= " ON DUPLICATE KEY UPDATE ".
 
-		"planetname=VALUES(planetname), msg_id=VALUES(msg_id),".
-		"metal=VALUES(metal),crystal=VALUES(crystal),deuterium=VALUES(deuterium),energy=VALUES(energy),".
+        //Get the SQL Ready
+        $general_fields = ['galaxy','system','planet','planetname','moon','msg_id','fleet_resis',
+            'defence_resis','scantime','user_id','scanned','min_phalanx','max_phalanx','min_rak','max_rak'];
 
-		"kt=VALUES(kt),gt=VALUES(gt),lj=VALUES(lj),sj=VALUES(sj),krz=VALUES(krz),ss=VALUES(ss),kolo=VALUES(kolo),rec=VALUES(rec),".
-		"spio=VALUES(spio),bomb=VALUES(bomb),zerri=VALUES(zerri),ds=VALUES(ds),skrz=VALUES(skrz),sat=VALUES(sat),".
+        $OnDuplicateUpdate = "";
+        $EntryFields = "";
+        $EntryValues = "(";
+        //Add all general Values
+        foreach ($general_fields as $field) {
+            $EntryFields .= "`".$field."`,";
+            if(isset($entries_array[$field])){
+                $EntryValues .= ":".$field.",";
+            }else{
+                $EntryValues .= "0,";
+            }
+            if($field != "galaxy" && $field != "system" && $field != "planet"){
+                $OnDuplicateUpdate .= $field.'=VALUES('.$field.'),';
+            }
+        }
+        //Add our Game Objects Values
+        foreach (DB_REPORT_ARRAY as $entryobject) {
+            $EntryFields .= "`".$entryobject["DBFIELD"]."`,";
+            $OnDuplicateUpdate .= $entryobject["DBFIELD"].'=VALUES('.$entryobject["DBFIELD"].'),';
+            if(isset($entries_array[$entryobject["DBFIELD"]])){
+                $EntryValues .= ":".$entryobject["DBFIELD"].",";
+            }else{
+                $EntryValues .= "0,";
+            }
+        }
+        $EntryFields = rtrim($EntryFields, ",");
+        $EntryValues = rtrim($EntryValues, ",").")";
+        $OnDuplicateUpdate = rtrim($OnDuplicateUpdate, ",");
 
-		"rak=VALUES(rak),ll=VALUES(ll),sl=VALUES(sl),ion=VALUES(ion),gauss=VALUES(gauss),plasma=VALUES(plasma),".
-		"ksk=VALUES(ksk),gsk=VALUES(gsk),arak=VALUES(arak),irak=VALUES(irak),".
+        $sql = 'INSERT INTO '.$this->reporttable.' ('.$EntryFields.') VALUES '.$EntryValues.' ON DUPLICATE KEY UPDATE '.$OnDuplicateUpdate;
 
-		"memi=VALUES(memi),krimi=VALUES(krimi),deutsyn=VALUES(deutsyn),solar=VALUES(solar),fusion=VALUES(fusion),robo=VALUES(robo),".
-		"nani=VALUES(nani),rawe=VALUES(rawe),mesp=VALUES(mesp),krissp=VALUES(krissp),deutsp=VALUES(deutsp),folab=VALUES(folab),".
-		"terra=VALUES(terra),allydep=VALUES(allydep),raksilo=VALUES(raksilo),mbase=VALUES(mbase),sensor=VALUES(sensor),sprungtor=VALUES(sprungtor),".
+        $stmt = DB::getDB()->prepare($sql);
 
-		"spiolvl=VALUES(spiolvl),computech=VALUES(computech),waffentech=VALUES(waffentech),schildtech=VALUES(schildtech),rpz=VALUES(rpz),energytech=VALUES(energytech),".
-		"hypertech=VALUES(hypertech),vbt=VALUES(vbt),impulse=VALUES(impulse),hra=VALUES(hra),lasertech=VALUES(lasertech),iontech=VALUES(iontech),".
-		"plasmatech=VALUES(plasmatech),forschungsnetz=VALUES(forschungsnetz),expedition=VALUES(expedition),gravi=VALUES(gravi),".
+        //PDO reads everthing as strings if not bind directly...
+        foreach ($entries_array as $key=>$value){
+            //$sql = str_replace(":".$key.",",$value.",",$sql);
+           // echo ":$key - $value - ".gettype($value)."#";
+            switch (gettype($value)) {
+                case "integer":
+                    $stmt->bindValue($key,$value, PDO::PARAM_INT);
+                    break;
+                default:
+                    $stmt->bindValue($key,$value, PDO::PARAM_STR);
+                    break;
+            }
+        }
 
-		"fleet_resis=VALUES(fleet_resis),defence_resis=VALUES(defence_resis),".
-		"scantime=VALUES(scantime),user_id=VALUES(user_id),scanned=VALUES(scanned),".
-		"min_phalanx=VALUES(min_phalanx),max_phalanx=VALUES(max_phalanx),min_rak=VALUES(min_rak),max_rak=VALUES(max_rak)";
+        $res = $stmt->execute();
 
-		$res = $this->exec($query);
 		if ($res === false) {
 			$this->error_object = new ErrorObject(ErrorObject::severity_error , "DB error occurred while inserting or updating reports");
 			$this->error_object->add_child_message($this->get_db_error_object());

@@ -68,14 +68,14 @@ define("INDEX_PLAYERS_WITH_N_PLANETS","Spieler mit mehr als &1 Planeten");
 define("INDEX_GETTING_STARTED","Erste Schritte mit dem Galaxietool");
 define("INDEX_GETTING_STARTED1","Willkommen im Galaxietool!");
 define("INDEX_GETTING_STARTED2","Das Galaxietool wird dich dabei unterstützen herauszufinden, was in deinem Universum &1 vorgeht.");
-define("INDEX_GETTING_STARTED3","Um aber überhaupt Daten analysieren zu können, müssen diese erst in das Tool integriert werden. Dazu benötigst du ein Plugin wie die &1 für Firefox.");
+define("INDEX_GETTING_STARTED3","Um aber überhaupt Daten analysieren zu können, müssen diese erst in das Tool integriert werden. Dazu benötigst du ein Plugin wie die &1 für Chrome.");
 define("INDEX_GETTING_STARTED4","Nachdem das Plugin installiert und eingerichtet wurde, surfst du durch die einzelnen OGameseiten wie sonst auch. Zusätzlich wird aber ein kleines Statusfenster erscheinen, wann immer Daten ins Galaxietool eingetragen wurden.");
 define("INDEX_GETTING_STARTED5","Sobald genügend Daten im Galaxietool vorhanden sind, kann die Analyse beginnen. So kann geschaut werden, wo Mitspieler ihre Kolonien haben, wie viele Kolonien sie besitzen, welche Spionageberichte von ihnen existieren und wann sie am häufigsten online sind.");
 define("INDEX_GETTING_STARTED6","Das Galaxietool kann aber auch zur Analyse des eigenen Fortschritts genutzt werden, indem Vergleiche mit anderen Mitspielern gezogen werden oder durch die Analyse der eigenen Kampfberichte um zu sehen was in den letzten Tagen / Wochen erbeutet wurde.");
 define("INDEX_GETTING_WIKIPAGE","Das war aber nur ein kleiner Auszug der Features des Galaxietools.");
 define("INDEX_GETTING_WIKIPAGE2","Sämtliche Features findest du auf unserer Wikiseite.");
 define("INDEX_GETTING_BOARD","Über Feedback oder Ideen freuen wir uns in unserem Board:");
-define("INDEX_GETTING_CHAT1","Oder besuche uns direkt in unserem Chatraum:");
+define("INDEX_GETTING_CHAT1","Oder besuche uns direkt in unserem Discord:");
 define("INDEX_GETTING_CHAT2","Wir sind nicht 24 Stunden / 7 Tage die Woche online, verbringen aber sehr viel Freizeit dort. Seid also bitte nicht ungeduldig, wenn ihr nach 30 Sekunden noch keine Antwort erhalten habt.");
 // 5.0
 define("INDEX_CLOSE","Schließen");

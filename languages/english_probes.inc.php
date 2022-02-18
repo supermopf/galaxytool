@@ -38,6 +38,8 @@ define("F_DESTROYER", "Destroyer");
 define("F_DEATHSTAR", "Deathstar");
 define("F_BATTLECRUISER","Battlecruiser");
 define("F_SOLARSATELLITE", "Solar Satellite");
+define("F_REAPER", "Reaper");
+define("F_PATHFINDER", "Pathfinder");
 
 /*********************************************************************/
 /**************************  Defense  ********************************/
@@ -77,6 +79,8 @@ define("B_ROCKETSILO", "Missile Silo");
 define("B_LUNARBASE", "Lunar Base");
 define("B_SENSORPHALANX", "Sensor Phalanx");
 define("B_JUMPGATE", "Jump Gate");
+define("B_SPACEDOCK", "Space Dock");
+define("B_CRAWLER", "Crawler");
 
 /*********************************************************************/
 /***************************** Research ****************************/
