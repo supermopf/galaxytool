@@ -103,9 +103,9 @@ echo '<a target="_blank" class="external_link" href="http://board.galaxytool.eu"
 echo "<br>";
 $username = preg_replace("/[^a-zA-Z0-9_]/","",$_SESSION['s_auth']->get_setting(iAuthorization::setting_username));
 $username = ($username == "") ? "Galaxytooluser" : $username;
-$url = "http://widget.mibbit.com/?server=webirc.onlinegamesnet.net&channel=%23galaxietool&nick=".$username."&customloading=waiting%20for%20the%20IRC-server%20...&customprompt=Welcome%20to%20Galaxytool%20IRC%20Channel.&noServerTab=false&noServerMotd=true&a";
+$url = "https://discord.gg/rN22BecPwd";
 echo INDEX_GETTING_CHAT1." ";
-echo '<a target="_blank" class="external_link" href="'.$url.'">http://wbe002.mibbit.com/</a><br>';
+echo '<a target="_blank" class="external_link" href="'.$url.'">Discord-Invite</a><br>';
 echo INDEX_GETTING_CHAT2;
 ?>
 </div>
